@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+          body{width:414px; font-family:Arial;font-size:14px; margin-left:auto; margin-right: auto;}
+      
+          
+          .heading{margin-left:100px;}
+          
+
+          label{color:#6c6c6c;}
+
+          input{line-height:31px;}
+          input2{width:288px;}
+
+          input,textarea{width:350px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background-color:rgba(255,255,255,.6);border:solid 1px #b6c7cb;}
+      
+          
+
+          #contact_form{height:270px;background-color:#e1e9eb;border:solid 1px #e5e5e5;padding:10px 20px 50px 20px;  -webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;}
+
+          #submit_button{width:109px;height:34px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background-color:#86c5fa;-webkit-box-shadow:inset 0 2px rgba(255,255,255,.29);-moz-box-shadow:inset 0 2px rgba(255,255,255,.29);box-shadow:inset 0 2px rgba(255,255,255,.29);border:solid 1px #77a4cb;font-weight:bold;color:#fff;margin-left:7px;}
+
+          label.required:after{content:'*';color:red;}
+
+          .row{margin:5px;}
+    </style>
+    <style type="text/css"></style>
+    <style type="text/css"></style>
+  </head>
+  <body>
+    <div class="container">
+      
+      <div class="heading"> <h2>Create your profile</h2><br> </div>
+         
+
+        <h3>{{message}}</h3>
+
+        <form id="contact_form"  method="POST" enctype="multipart/form-data">
+            <div class="row">
+              <label for="fname">First Name:</label><br>
+              <input id="fname" class="input" name="fname" type="text" value="" size="30" placeholder="First name"><br>
+            </div>
+          
+            <div class="row">
+              <label for="lname">Last Name:</label><br>
+              <input id="lname" class="input" name="lname" type="text" value="" size="30" placeholder="Last name"><br>
+            </div>
+          
+            <div class="row">
+              <label for="fname">Age:</label><br>
+              <input id="age" class="input" name="age" type="text" value="" size="15" placeholder="Age"><br>
+            </div>
+          
+            <label class="row">Sex:</label>
+            <select class="row">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <br>
+            <br>
+            <input id="image" class="input" name="image" type="file" accept="image/*">
+            <br>
+            <br>
+            <input id="submit_button" type="submit" value="Create Profile">
+        </form>
+     </div>
+  </body>
+    <button id="javascript-popup-blocker-notify" style="display: none;"></button>
+</html>

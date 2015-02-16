@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html >
+  
+<head>
+        
+       <title>Profile Choice</title>
+  
+      
+          
+       <link href="{{ url_for('static', filename='index.css') }}" rel='stylesheet' type="text/css"/>
+        
+             <script type="text/javascript">
+               
+             function  newprofile()
+             {
+              
+                window.location.href = "{{url_for('profile')}}";
+               
+             }
+               
+             function chooseprofile()
+             {
+               
+               window.location.href = "{{url_for('profiles')}}";
+              
+             } 
+               
+             function changeA()
+             {
+                var b1 = document.getElementById("newProf");
+                b1.style.color='#A0702E'; return true;
+               
+             }
+             
+               
+             function changeB()
+             {
+                var b1 = document.getElementById("newProf");
+                b1.style.color='#000000'; return true;
+               
+             }
+               
+             function changeC()
+             {
+                var b1 = document.getElementById("exProf");
+                b1.style.color='#A0702E'; return true;
+               
+             }
+             
+               
+             function changeD()
+             {
+                var b1 = document.getElementById("exProf");
+                b1.style.color='#000000'; return true;
+               
+             }
+               
+               //var di = document.querySelector('#green');
+               //var ch = function()
+               //{
+                  //  di.id = "red"; 
+               //}
+            
+             </script>
+  
+            
+</head>
+    
+<body >
+  <h1>Welcome</h1> 
+ <h2>Please Select a profile option</h2>  
+  
+     <div id="box">  
+          <div id="choice">
+            
+          <input id="newProf"  type="button" value="New Profile" onclick="newprofile()" onmouseover="changeA()" onmouseout="changeB()">
+          <input id="exProf"  type="button" value="Existing Profile" onclick="chooseprofile()" onmouseover="changeC()" onmouseout="changeD()">
+            
+          </div> 
+     </div>
+  
+
+</body>
+  
+  
+
+    
+</html>
