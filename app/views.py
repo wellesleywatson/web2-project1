@@ -14,10 +14,34 @@ from flask import render_template, request, redirect, url_for
 # Routing for your application.
 ###
 
+# @app.route('/')
+# def home():
+#     """Render website's home page."""
+#     return render_template('home.html')
+  
+  
+  
 @app.route('/')
-def home():
+def index():
     """Render website's home page."""
-    return render_template('home.html')
+    return render_template('index.html')
+  
+
+@app.route('/profile')
+def profile():
+  return render_template('profile.html')
+  
+
+@app.route('/profiles')
+def profiles():
+    """Render website's home page."""
+    return render_template('profiles.html')
+  
+  
+@app.route('/profiles/<userid>')
+def user():
+    """Render website's home page."""
+    return render_template('user.html')
 
 
 @app.route('/about/')
