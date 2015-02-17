@@ -24,12 +24,12 @@ from flask import render_template, request, redirect, url_for
 @app.route('/')
 def index():
     """Render website's home page."""
-    return render_template('index.html')
+    return render_template('index2.html')
   
 
 @app.route('/profile')
 def profile():
-  return render_template('profile.html')
+  return render_template('profile2.html')
   
 
 @app.route('/profiles')
