@@ -106,8 +106,9 @@ def timeinfo():
 
 @app.route('/profiles')
 def profiles_list():
-    """Render website's home page."""
-    return render_template('profiles.html')
+    profiles = Profile_db.query.all()
+    return render_template('profiles.html',
+                          profiles=profiles)
   
 ##########################################################################
 ########################################################################## 
