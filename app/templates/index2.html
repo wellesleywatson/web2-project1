@@ -10,52 +10,7 @@
     <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ url_for('static', filename='css/profile-templates.css')}}" rel="stylesheet" type="text/css" />
     
-    <script type="text/javascript">
-               
-             function  newprofile()
-             {
-              
-                window.location.href = "{{url_for('profile')}}";
-               
-             }
-               
-             function chooseprofile()
-             {
-               
-               window.location.href = "{{url_for('profiles')}}";
-              
-             } 
-               
-             function changeA()
-             {
-                var b1 = document.getElementById("newProf");
-                b1.style.color='#A0702E'; return true;
-               
-             }
-             
-               
-             function changeB()
-             {
-                var b1 = document.getElementById("newProf");
-                b1.style.color='#000000'; return true;
-               
-             }
-               
-             function changeC()
-             {
-                var b1 = document.getElementById("exProf");
-                b1.style.color='#A0702E'; return true;
-               
-             }
-             
-               
-             function changeD()
-             {
-                var b1 = document.getElementById("exProf");
-                b1.style.color='#000000'; return true;
-               
-             }
-    </script>
+   
 	 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -66,23 +21,42 @@
     <![endif]-->
   </head>
   <body>
-         <div class="container">
-          <div class="jumbotron vertical-center col-lg-12">
-            <div class="container text-center">
+     <div class="container">
+        <div class="jumbotron vertical-center col-lg-12">
+          <div class="container text-center">
               <h1>Welcome!</h1>
               <p>Please select an option.</p>
               <p>
                 <div class="btn-group">
-                  <button id="newProf" value="New Profile" onclick="newprofile()" type="button" class="btn btn-info">New Profile</button>
+                  <button id="newProf" value="New Profile" onclick="newprofile()" type="button" class="btn btn-info">Create Profile</button>
                 </div>
                 <div class="btn-group">
-                  <button id="exProf" value="Existing Profile" onclick="newprofile()" type="button" class="btn btn-info">Existing Profile</button>
+                  <button id="exProf" value="Existing Profile" onclick="newprofile()" type="button" class="btn btn-info">List Profiles</button>
                 </div>
               </P>
             </div>
           </div>
       </div>
+      
   
+       <script type="text/javascript">
+               
+             function  newprofile()
+             {
+              
+               window.location.href = "{{url_for('profile_create')}}";
+               
+             }
+               
+             function chooseprofile()
+             {
+               
+               window.location.href = "{{url_for('profiles_list')}}";
+              
+             } 
+               
+           
+    </script>
       <script src="js/jquery.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
   </body>

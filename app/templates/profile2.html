@@ -18,7 +18,7 @@
     <![endif]-->
   </head>
   <body>
-  <div class="navbar navbar-default navbar-fixed-top">
+  <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
           <div class="navbar-header">
               <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
@@ -30,11 +30,11 @@
           <center>
               <div class="navbar-collapse collapse" id="navbar-main">
                   <ul class="nav navbar-nav">
-                      <li class="active">
-                        <a href="#"><span class="glyphicon glyphicon-home"></span> Home</a>
+                      <li class="active" id="menu">
+                        <a href="{{url_for('profile_create')}}"><span class="glyphicon glyphicon-home"></span> Create Profile</a>
                       </li>
-                      <li>
-                        <a href="#"><span class="glyphicon glyphicon-list-alt"></span> Profiles</a>
+                      <li class="" id="menu">
+                        <a href="{{url_for('profiles_list')}}"><span class="glyphicon glyphicon-list-alt"></span> Show Profiles</a>
                       </li>
                   </ul>
                   <form class="navbar-form navbar-right" role="form">
@@ -42,7 +42,7 @@
                         <input type="text" class="form-control" name="username" placeholder="Username">
                       </div>
                       <div class="form-group">
-                          <input type="text" class="form-control" name="password" placeholder="Password">
+                          <input type="password" class="form-control" name="password" placeholder="Password">
                       </div>
                         <button type="submit" class="btn btn-success">Sign In</button>
                   </form>
@@ -50,48 +50,176 @@
           </center>
       </div>
   </div>
-  <div class="container">
-	  <h1 class="text-muted">Create Your Own Profile.</h1>
-	  <hr/>
-		<div class="jumbotron col-lg-12">
-      
-      
-			<form id="contact_form" method="POST">
-				<div class="form-group">
-					<label for="firstName">First Name:</label>
-					<input type="text" class="form-control" id="firstName" placeholder="First" required>
-				</div>
-				
-				<div class="form-group">
-					<label for="lastName">Last Name:</label>
-					<input type="text" class="form-control" id="lastName" placeholder="Last" required>
-				</div>
-				
-				<div class="form-group">
-					<label for="firstName">Age:</label>
-					<input type="text" class="form-control" id="Age" placeholder="Age" required>
-				</div>
-			
-				<div class="form-group">
-					<label for="sex">Sex:</label>
-					<select class="form-control" title="choose a sex">
-						<option>Male</option>
-						<option>Female</option>
-					</select>
-				</div>
+  <!--this is the beggining of the from container-->
+   <div class="container ">
+    <h1 class="text-muted ">Create Your Own Profile.</h1>
+    <hr/>
+    <div class="jumbotron vertical-center col-xs-6">
+      <!-- form starts 
+        <div class="container"  -->
+        <form class="form-horizontal" action = "{{url_for('profile_create')}}" role="form" id="reg_form" method="POST" name="docform" onsubmit="return validateForm1()">
 
-				<div class="form-group">
-					<label for="InputFile">Image:</label>
-					<input class="input-sm" type="file" id="InputFile">
-				</div>
-				<div class="form-group center-block">
-					<button id="submit_button" type="submit" class="btn btn-success center-block">Create Profile</button>
-				</div>
-			</form>
-		</div>
-	</div>
-  
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+                   <div class="form-group">
+                <!--  -->
+                      <div class="col-xs-12">
+                        <label for="fname">First Name:</label>
+                        <input class="form-control" id="fname" name="fname" type="text" placeholder="first">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                <!--  -->
+                      <div class="col-xs-12">
+                        <label for="lname">Last Name:</label>
+                        <input class="form-control" id="lname" name="lname" type="text" placeholder="last">
+                      </div>
+                    </div>
+          
+                    <div class="form-group">
+                <!--  -->
+                      <div class="col-xs-6">
+                        <label for="age">Age:</label>
+                        <input class="form-control" id="age" name="age" type="number" placeholder="Age">
+                      </div>
+                          
+                            <div class="col-xs-6">
+                              <label for="sex">Sex:</label>
+                              <select class="form-control" title="choose a sex" id="sex" name="sex">
+                                 <option>Male</option>
+                                 <option>Female</option>
+                               </select>
+                            </div>
+                          
+                     </div>
+                    <div class="form-group">
+                <!--  -->
+                      <div class="col-xs-3">
+                        <label for="file">Image:</label>
+                        <input type="file" name="file" id="file" onchange="checkfile()">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                <!--  -->
+                      <div class="col-xs-5">
+                        <button type="submit" class="btn btn-success" id="submit" name="submit">Create Profile</button>
+                      </div>
+                    </div>
+         </form>
+        <!-- </div>
+       form ends -->
+    </div>
+  </div>
+<!--     <script type="text/javascript">
+      
+      function  newprofile()
+             {
+              
+                window.location.href = "{{url_for('profile')}}";
+               
+             }
+      
+      function makeActive()
+      { 
+        var select = document.getElementById('menu');
+      }
+    
+    </script> -->
+    <script type="text/javascript">
+      function validateForm()
+      {
+        var letters = /^[A-Za-z]+$/; 
+        
+        var x=document.forms["docform"]["fname"].value;
+        if (x == null || x == "")
+        {
+          document.getElementById('fname').style.background = 'red';
+          alert("Please enter your first name!");
+          return false;
+        }
+        else if (x.length == 1 || x.value.match(letters))
+        {
+          document.getElementById('fname').style.background = 'red';
+
+          alert("Please enter more than one character of valid type!");
+          return false;
+		    }
+        else if (x.length > 1)
+        {
+          document.getElementById('fname').style.background = '';
+        }
+        
+        
+        var x=document.forms["docform"]["lname"].value;
+        if (x == null || x == "")
+        {
+          document.getElementById('lname').style.background = 'red';
+          alert("Please enter your last name!");
+          return false;
+        }
+        else if (x.length == 1 || x.value.match(letters))
+        {
+          document.getElementById('lname').style.background = 'red';
+
+          alert("Please enter more than one character of valid type!");
+          return false;
+		    }
+        else if (x.length > 1)
+        {
+          document.getElementById('lname').style.background = '';
+        }
+        
+        var x=document.forms["docform"]["age"].value;
+        if (x == null || x == "")
+        {
+          document.getElementById('age').style.background = 'red';
+          alert("Please enter your age!");
+          return false;
+        }
+        else if (isNaN(x))
+        {
+          document.getElementById('age').style.background = 'red';
+          alert("Please enter a correct age type!");
+          return false;
+        }
+        else if(x != null)
+        {
+          document.getElementById('age').style.background = '';
+        }
+        
+        var x=document.forms["docform"]["sex"].value;
+        if (x != "Male" || x != "Female")
+        {
+          document.getElementById('sex').style.background = 'red';
+          alert("incorrect gender entered!");
+          return false;
+        }
+        else if ( x == "Male" || x == "Female")
+        {
+          document.getElementById('sex').style.background = '';    
+        }
+      }
+      
+      
+      function checkfile()
+      {
+        var ftype = document.getElementById('file');
+        var filename = ftype.value;
+        var ext = filename.substring(fileName.lastIndexOf('.') + 1);
+        if(ext == "gif" || ext == "GIF" || ext == "JPEG" || ext == "jpeg" || ext == "jpg" || ext == "JPG" || ext == "doc")
+        {
+          return true;
+        } 
+        else
+        {
+          alert("Upload correct image file!");
+          ftype.focus();
+          return false;
+        }
+      }
+    
+    </script>
+  <script src="{{ url_for('static', filename='js/jquery.js')}}" ></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.js')}}" ></script>
   </body>
 </html>

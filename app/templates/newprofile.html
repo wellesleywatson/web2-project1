@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+
+{% block js %}
+{% endblock %}
+
+
+{% block main %}
+    <div class="container">
+      <h1>CREATE A NEW PROFILE</h1>
+      <p>Please enter your particulars below:</p>
+      <hr />
+      <form action="{{ url_for('profile_create') }}" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        First Name:<br /> {{ form.first_name }}<br />
+        Last Name:<br /> {{ form.last_name }}<br />
+        Age:<br /> {{ form.age }}<br />
+        Sex:<br /> {{ form.sex }}<br />
+        Image:<br /> {{ form.image }}<br />
+        <input type="submit" />
+
+      </form>
+    </div>
+{% endblock %}
