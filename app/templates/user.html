@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+</head>
+
+<body>
+<div id="main" style="width: 600px; height: 300px; border-width: 1px; border-style: solid; margin-left:auto; margin-right: auto;">
+  <div id="imagecnt">
+    <div id="image">
+      <img alt="profile pic" src={{load_pic}} class="img-circle" style="width: 250px; height: 270px; border-width: 2px; border-style: solid; margin: 10px; float: left;" />
+    </div>
+  </div>
+  <div id="info" style=" width: 300px; height: 300px; margin-right: 10px; float:right;">
+      <div id="name">
+        <h1>
+          <strong>{{profile.firstname}} {{profile.lastname}}</strong>
+        </h1>
+      </div>
+
+      <div id="timedate">
+           <p>
+              <h4>{{time}}</h4>
+          </p>
+      </div>
+
+      <div id="cred" style="line-height:15%;">
+        <p><b>Username:</b> {{profile.username}}</p>
+        <p><b>ID:</b> {{profile.userid}}</p>
+        <p><b>Sex:</b> {{profile.sex}}</p>
+        <p><b>Age:</b> {{profile.age}}</p>
+        <p><b>Highest Score:</b> {{profile.high_score}}</p>
+        <p><b>TDollars:</b> {{profile.tdollars}}</p>
+       </div>
+   </div>
+</div>
+</body>
+
+</html>

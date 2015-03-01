@@ -7,11 +7,19 @@
 
 {% block main %}
     <div class="container">
-      <h1>VIEW PROFILES AVAILABLE BELOW</h1>
+      <h1>List Of Profiles</h1>
+      <div>{{msg}}</div>
       <hr />
       <ul>
         {% for profile in profiles %}
-        <li>{{profile.firstname}} {{profile.lastname}} <a>{{profile.userid}}</a></li>
+        <p>
+           <h2> {{profile.firstname}} {{profile.lastname}} </h2>
+           <b>Username:</b> {{profile.username}}<br>
+           <b>User ID:</b><a href='/profiles/{{profile.userid}}'> {{profile.userid}}</a><br>
+           <hr />
+<!-- <li>{{profile.firstname}} {{profile.lastname}} <a href='/profiles/{{profile.userid}}'> {{profile.userid}}</a></li> -->
+           
+        </p>
         {%endfor %}
       </ul>
     </div>

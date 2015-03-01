@@ -1,7 +1,7 @@
 
 from flask.ext.wtf import Form
 from wtforms.fields import TextField, IntegerField, SelectField, FileField
-from wtforms.validators import Required, Email, optional
+from wtforms.validators import Required
 
 class ProfileForm(Form):
       first_name = TextField('First Name', validators=[Required()])

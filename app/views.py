@@ -6,70 +6,31 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
 
-from app import app
-from flask import render_template, request, redirect, url_for, flash, session
-from app import db
-#from app.models import User
+from app import app, db
+from flask import render_template, request, redirect, url_for, flash, session, jsonify, send_from_directory
+from werkzeug import secure_filename
 from app.models import Profile_db
+from .forms import ProfileForm
+from flask import Response
 
 import random
 import string
 import time
+import json
+import os
 
-from .forms import ProfileForm
 
-###
-# Routing for your application.
-###
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
-# @app.route('/theform', methods=["GET", "POST"])
-# def theform():
-#     form = EmailPasswordForm()
-#     return render_template('theform.html', form=form)
-  
-# @app.route('/theform', methods=["GET", "POST"])
-# def theform():
-#     form = EmailPasswordForm()
-#     return render_template('theform.html', form=form)
 
-  
+#####################################################################################################################################  
+#####################################################################################################################################
   
 @app.route('/')
 def index():
     """Render website's home page."""
     return render_template('index2.html')
   
-##########################################################################
-##########################################################################
-
-
-# @app.route('/profile', methods=['POST', 'GET'])
-# def profile_create():
-#   if request.method == 'POST':
-#     fname = request.form['fname']
-#     lname = request.form['lname']
-#     age = request.form['age']
-#     sex = request.form['sex']
-#     image = request.form['file']
-#     userid = random.randint(10000000, 99999999)
-#     uname = ''.join([random.choice(fname + lname) for n in xrange(8)]) 
-#     prof_add = timeinfo()
-#     high_score = 0
-#     tdollars = 0
-    
-#     filename = 'pic.jpg'
-#     img = 'img/' + filename
-    
-#     newusr = Profile.query.filter_by(username = uname).first()
-#     if (newusr is None):
-#       newprof = Profile(userid, uname, img, fname, lname, sex, age, prof_add, high_score, tdollars)
-#       db.session.add(newprof)
-#       db.session.commit()
-#       flash('new user created')
-#     else:
-#       flash('user already exist')
-#   return render_template('profile2.html')
-
 ##########################################################################
 ##########################################################################
 @app.route('/profile', methods=['POST', 'GET'])
@@ -80,30 +41,42 @@ def profile_create():
       last_name = request.form['last_name']
       age = request.form['age']
       sex = request.form['sex']
-#      image = request.form['image']
-      image = 'pic.jpeg'
-      
       userid = random.randint(10000000, 99999999)
       username = ''.join([random.choice(first_name + last_name) for n in xrange(8)]) 
       prof_add = timeinfo()
       high_score = 0
       tdollars = 0
       
-      newprofile = Profile_db( userid, username, first_name, last_name, sex, age, prof_add, high_score, tdollars, image)
+      image = request.files['image']
+      if image and allowed_file(image.filename):
+        filename = username + '_' + secure_filename(image.filename)
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            
+      
+      newprofile = Profile_db( userid, username, first_name, last_name, sex, age, prof_add, high_score, tdollars, filename)
       db.session.add(newprofile)
       db.session.commit()
-      return "{} {} {} {} {} this was a post".format(first_name, last_name, age, sex, image)
+      getuser = Profile_db.query.filter_by(username=username).first()
+      reply = "User: {} {}  now has a profile. Please see profile below."
+      msg = reply.format(first_name, last_name)
+      return redirect('/profiles')
     return render_template('newprofile.html', form=form)
   
 def timeinfo():
     now = time.strftime("%a, %d %b %Y")
     return now 
+
   
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+  
+
+        
+      
 
 
 ##########################################################################
 ########################################################################## 
-
 @app.route('/profiles')
 def profiles_list():
     profiles = Profile_db.query.all()
@@ -114,15 +87,33 @@ def profiles_list():
 ########################################################################## 
 @app.route('/profiles/<int:id>')
 def profile_view(id):
-    """Render website's home page."""
-    return render_template('user.html')
+    profile = Profile_db.query.get(id)
+    load_pic = reload_file(profile)
+    time = timeinfo()
+    return render_template('user.html',profile=profile,time=time, load_pic=load_pic )
   
+def reload_file(filename):
+    return url_for('static', filename='img/profile_pics/'+filename.image) 
+##########################################################################
+########################################################################## 
+# @app.route('/profiles', methods=['GET'])
+# def jsonify_prof():
+#   if request.method == 'POST':
+#       all_profiles = Profile_db.query.all()
+#       lst = []
+#       for entry in all_profiles:
+#         lst.append({'userid':entry.userid, 'username':entry.username, 'firstname':entry.firstname, 'lastname':entry.lastname, 'sex':entry.sex, 'age':entry.age ,'prof_add':entry.prof_add, 'high_score':entry.high_score, 'tdollars':entry.tdollars, 'image':entry.image})
+#       new = {'all_profiles':lst}
+#       return Response(json.dumps(new), mimetype='application/json')
+#   else:
+#     return render_template('profiles.html', all_profiles=all_profiles)
   
 ##########################################################################
 ########################################################################## 
 @app.route('/person')
 def person():
-    first_user = db.session.query(Profile_db).first()
+    val = db.session.query(Profile_db).all()
+    first_user = val[1]
     return  " username: {}, prof_add: {}, firstname: {}, lastname: {}, tdollars: {}, image: {}, sex: {}, high_score:{}, age:{}".format(first_user.username,
                                                                                                                                        first_user.prof_add, 
                                                                                                                                       first_user.firstname,
