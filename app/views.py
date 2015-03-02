@@ -77,23 +77,45 @@ def allowed_file(filename):
 
 ##########################################################################
 ########################################################################## 
-@app.route('/profiles')
+@app.route('/profiles',methods=['POST', 'GET'])
 def profiles_list():
     profiles = Profile_db.query.all()
-    return render_template('profiles.html',
-                          profiles=profiles)
+    storage = []
+    if request.method == 'POST':
+      for users in profiles:
+        storage.append({'userid':profile.userid, 'username':profile.username, 'firstname':profile.firstname, 'lastname':profile.lastname, 'sex':profile.sex, 'age':profile.age, 'prof_add':profile.prof_add, 'high_score':profile.high_score, 'tdollars':profile.tdollars, 'image':profile.image})
+      users = {'users': storage}
+      return json.dump(users)
+    else:
+      return render_template('profiles.html',profiles=profiles)
   
 ##########################################################################
 ########################################################################## 
-@app.route('/profiles/<int:id>')
+@app.route('/profiles/<int:id>',methods=['POST', 'GET'])
 def profile_view(id):
     profile = Profile_db.query.get(id)
     load_pic = reload_file(profile)
     time = timeinfo()
-    return render_template('user.html',profile=profile,time=time, load_pic=load_pic )
-  
+    date = str(profile.prof_add)
+    if request.method == 'POST':
+      return jsonify(userid=profile.userid, 
+                     username=profile.username, 
+                     firstname=profile.firstname, 
+                     lastname=profile.lastname, 
+                     sex=profile.sex, 
+                     age=profile.age, 
+                     prof_add=profile.prof_add, 
+                     high_score=profile.high_score, 
+                     tdollars=profile.tdollars, 
+                     image=profile.image)
+    else:
+      return render_template('user.html',profile=profile,time=date, load_pic=load_pic )
+    
+    
 def reload_file(filename):
-    return url_for('static', filename='img/profile_pics/'+filename.image) 
+    return url_for('static', filename='img/profile_pics/'+filename.image)
+  
+ 
 ##########################################################################
 ########################################################################## 
 # @app.route('/profiles', methods=['GET'])
