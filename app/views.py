@@ -118,20 +118,6 @@ def reload_file(filename):
  
 ##########################################################################
 ########################################################################## 
-# @app.route('/profiles', methods=['GET'])
-# def jsonify_prof():
-#   if request.method == 'POST':
-#       all_profiles = Profile_db.query.all()
-#       lst = []
-#       for entry in all_profiles:
-#         lst.append({'userid':entry.userid, 'username':entry.username, 'firstname':entry.firstname, 'lastname':entry.lastname, 'sex':entry.sex, 'age':entry.age ,'prof_add':entry.prof_add, 'high_score':entry.high_score, 'tdollars':entry.tdollars, 'image':entry.image})
-#       new = {'all_profiles':lst}
-#       return Response(json.dumps(new), mimetype='application/json')
-#   else:
-#     return render_template('profiles.html', all_profiles=all_profiles)
-  
-##########################################################################
-########################################################################## 
 @app.route('/person')
 def person():
     val = db.session.query(Profile_db).all()
