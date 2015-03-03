@@ -49,7 +49,7 @@ def profile_create():
       
       image = request.files['image']
       if image and allowed_file(image.filename):
-        filename = username + '_' + secure_filename(image.filename)
+        filename = str(userid) + '_' + secure_filename(image.filename)
         image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
       
@@ -83,9 +83,9 @@ def profiles_list():
     storage = []
     if request.method == 'POST':
       for users in profiles:
-        storage.append({'userid':profile.userid, 'username':profile.username, 'firstname':profile.firstname, 'lastname':profile.lastname, 'sex':profile.sex, 'age':profile.age, 'prof_add':profile.prof_add, 'high_score':profile.high_score, 'tdollars':profile.tdollars, 'image':profile.image})
+        storage.append({'userid':users.userid, 'username':users.username, 'firstname':users.firstname, 'lastname':users.lastname, 'sex':users.sex, 'age':users.age, 'prof_add':str(users.prof_add), 'high_score':users.high_score, 'tdollars':users.tdollars, 'image':users.image})
       users = {'users': storage}
-      return json.dump(users)
+      return json.dumps(users)
     else:
       return render_template('profiles.html',profiles=profiles)
   
@@ -95,21 +95,21 @@ def profiles_list():
 def profile_view(id):
     profile = Profile_db.query.get(id)
     load_pic = reload_file(profile)
-    time = timeinfo()
-    date = str(profile.prof_add)
+    date = profile.prof_add
+    val = date.strftime("%a, %d %b %Y")
     if request.method == 'POST':
-      return jsonify(userid=profile.userid, 
+      return jsonify(age=profile.age, 
                      username=profile.username, 
-                     firstname=profile.firstname, 
-                     lastname=profile.lastname, 
-                     sex=profile.sex, 
-                     age=profile.age, 
-                     prof_add=profile.prof_add, 
+                     #firstname=profile.firstname, 
+                     #lastname=profile.lastname, 
+                     sex=profile.sex,
+                     userid=profile.userid,
+                     prof_add=str(val), 
                      high_score=profile.high_score, 
                      tdollars=profile.tdollars, 
                      image=profile.image)
     else:
-      return render_template('user.html',profile=profile,time=date, load_pic=load_pic )
+      return render_template('user.html',profile=profile,time=val, load_pic=load_pic )
     
     
 def reload_file(filename):
